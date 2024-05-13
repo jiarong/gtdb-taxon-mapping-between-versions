@@ -10,4 +10,4 @@ csvtk join -t -f"2;2" R202_to_R214.change.R202.assid2taxid2lineage.tsv R202_to_R
 
 grep -v -Fw -f R202_to_R214.change.taxid.list gtdb-taxdump/R202/taxid.map | csvtk join -t -L -H --na NA -f"1;1" - <(zcat taxonomy/R202/*tsv.gz | sed 's/GB_//; s/RS_//') > R202_to_R214.keep.R202.assid2taxid2lineage.tsv
 
-python scripts/make-taxon-conversion-map.py <(cut -f3,5 R202_to_R214.change.lineage_map.tsv | csvtk sort -t -k1 -k2) <(cut -f3 R202_to_R214.keep.R202.assid2taxid2lineage.tsv | sort | uniq) | sed '1i old\tnew' > R202_to_R214.change.taxon_map.tsv
+python scripts/make-taxon-conversion-map.py <(cut -f3,5 R202_to_R214.change.lineage_map.tsv | csvtk sort -t -k1 -k2) <(zcat taxonomy/R214/*_taxonomy_r214.tsv.gz | cut -f2 | sort | uniq) | sed '1i old\tnew' > R202_to_R214.change.taxon_map.tsv
